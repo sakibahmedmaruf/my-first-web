@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>ওসমানীনগর ব্লাড ডোনেশন সোসাইটি</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    nav {
+      background-color: #c0392b;
+      padding: 15px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      background-color: #e74c3c;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 36px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-top: 40px;
+    }
+    .section {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .group-box {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .blood-group {
+      background-color: #e74c3c;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .blood-group:hover {
+      background-color: #c0392b;
+    }
+    .donor-list {
+      display: none;
+      margin-top: 10px;
+    }
+    .donor-card {
+      background-color: #fff;
+      border-left: 5px solid #e74c3c;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .donor-card strong {
+      display: inline-block;
+      width: 120px;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      margin-top: 40px;
+      color: #666;
+    }
+    .form-section {
+      background: #fff;
+      padding: 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#home">হোম</a>
+    <a href="#about">আমাদের সম্পর্কে</a>
+    <a href="#projects">প্রজেক্ট</a>
+    <a href="#donors">ডোনার তালিকা</a>
+    <a href="#add">ডোনার যোগ</a>
+    <a href="#contact">যোগাযোগ</a>
+  </nav>
+  <section class="hero" id="home">
+    <h1>ওসমানীনগর ব্লাড ডোনেশন সোসাইটি</h1>
+    <p>রক্ত দিন, জীবন বাঁচান।</p>
+  </section>
+  <section class="section" id="about">
+    <h2>আমাদের সম্পর্কে</h2>
+    <p>ওসমানীনগর ব্লাড ডোনেশন সোসাইটি একটি স্বেচ্ছাসেবী সংগঠন...</p>
+  </section>
+  <section class="section" id="projects">
+    <h2>আমাদের প্রজেক্ট</h2>
+    <ul>
+      <li>📍 ব্লাড ক্যাম্প আয়োজন</li>
+      <li>📍 জনসচেতনতা র‍্যালি</li>
+      <li>📍 অসহায় রোগীর পাশে দাঁড়ানো</li>
+      <li>📍 অনলাইন ব্লাড ডোনার ডাটাবেজ তৈরি</li>
+    </ul>
+  </section>
+  <section class="section" id="donors">
+    <h2>রক্তদাতাদের তালিকা</h2>
+    <input type="text" placeholder="লাইভ সার্চ..." onkeyup="liveSearch(this.value)">
+    <div class="group-box">
+      <div class="blood-group" onclick="showGroup('A+')">A+</div>
+      <div class="blood-group" onclick="showGroup('A-')">A-</div>
+      <div class="blood-group" onclick="showGroup('O+')">O+</div>
+      <div class="blood-group" onclick="showGroup('O-')">O-</div>
+       <div class="blood-group" onclick="showGroup('B+')">B+</div>
+        <div class="blood-group" onclick="showGroup('B-')">B-</div>
+         <div class="blood-group" onclick="showGroup('AB+')">AB+</div>
+          <div class="blood-group" onclick="showGroup('AB-')">AB-</div>
+    </div>
+    <div id="donor-output"></div>
+  </section>
+  <section class="form-section" id="add">
+    <h2>নতুন ডোনার যোগ করুন / আপডেট করুন</h2>
+    <form onsubmit="addOrUpdateDonor(event)">
+      <input type="text" id="donor-name" placeholder="নাম" required>
+      <input type="text" id="donor-area" placeholder="এলাকা" required>
+      <select id="donor-group" required>
+        <option value="">রক্তের গ্রুপ</option>
+        <option value="A+">A+</option>
+        <option value="B+">B+</option>
+        <option value="O+">O+</option>
+        <option value="AB+">AB+</option>
+      </select>
+      <input type="text" id="donor-phone" placeholder="ফোন নম্বর" required>
+      <input type="date" id="donor-date" required>
+      <button type="submit">সংরক্ষণ করুন</button>
+    </form>
+  </section>
+  <section class="section" id="contact">
+    <h2>যোগাযোগ</h2>
+    <p>📞 মোবাইল: 017xxxxxxxx</p>
+    <p>✉ ইমেইল: osmaninagarbloodsociety@gmail.com</p>
+    <p>📍 লোকেশন: ওসমানীনগর, সিলেট</p>
+  </section>
+  <div class="footer">
+    &copy; ২০২৫ ওসমানীনগর ব্লাড ডোনেশন সোসাইটি | All Rights Reserved
+  </div>
+  <script>
+    let donorData = [];
+    function showGroup(group) {
+      const output = document.getElementById('donor-output');
+      output.innerHTML = '';
+      const filtered = donorData.filter(d => d.group === group);
+      if (filtered.length === 0) {
+        output.innerHTML = '<p style="text-align:center">এই গ্রুপে কোনো ডোনার নেই।</p>';
+        return;
+      }
+      filtered.forEach(d => {
+        output.innerHTML += `
+          <div class="donor-card">
+            <strong>নাম:</strong> ${d.name}<br>
+            <strong>এলাকা:</strong> ${d.area}<br>
+            <strong>রক্তের গ্রুপ:</strong> ${d.group}<br>
+            <strong>ফোন:</strong> ${d.phone}<br>
+            <strong>শেষ রক্তদান:</strong> ${d.lastDate}
+          </div>
+        `;
+      });
+    }
+    function addOrUpdateDonor(e) {
+      e.preventDefault();
+      const name = document.getElementById('donor-name').value.trim();
+      const area = document.getElementById('donor-area').value.trim();
+      const group = document.getElementById('donor-group').value;
+      const phone = document.getElementById('donor-phone').value.trim();
+      const lastDate = document.getElementById('donor-date').value;
+      const existing = donorData.find(d => d.phone === phone);
+      if (existing) {
+        existing.name = name;
+        existing.area = area;
+        existing.group = group;
+        existing.lastDate = lastDate;
+        alert('✅ তথ্য আপডেট হয়েছে!');
+      } else {
+        donorData.push({ name, area, group, phone, lastDate });
+        alert('✅ নতুন ডোনার সংরক্ষণ হয়েছে!');
+      }
+      document.querySelector('form').reset();
+    }
+    function liveSearch(keyword) {
+      const output = document.getElementById('donor-output');
+      output.innerHTML = '';
+      const filtered = donorData.filter(d => {
+        return d.name.includes(keyword) || d.area.includes(keyword) || d.group.includes(keyword);
+      });
+      if (filtered.length === 0) {
+        output.innerHTML = '<p style="text-align:center">কিছুই পাওয়া যায়নি।</p>';
+        return;
+      }
+      filtered.forEach(d => {
+        output.innerHTML += `
+          <div class="donor-card">
+            <strong>নাম:</strong> ${d.name}<br>
+            <strong>এলাকা:</strong> ${d.area}<br>
+            <strong>রক্তের গ্রুপ:</strong> ${d.group}<br>
+            <strong>ফোন:</strong> ${d.phone}<br>
+            <strong>শেষ রক্তদান:</strong> ${d.lastDate}
+          </div>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
